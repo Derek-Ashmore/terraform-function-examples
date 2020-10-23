@@ -7,8 +7,7 @@ Key2.Key2b = ${map["Key2"]["Key2b"]}
 
 # Complex map and nested for loops
 %{ for key,submap in map ~}
-Root key = ${key}
 %{ for subkey,subvalue in submap ~}
-    ${subkey} = ${subvalue}
+${key}.${subkey} = ${subvalue}
 %{ endfor ~}
 %{ endfor ~}
