@@ -1,0 +1,14 @@
+
+# Static map reference
+Key1.Key1a = ${map["Key1"]["Key1a"]}
+Key1.Key1b = ${map["Key1"]["Key1b"]}
+Key2.Key2a = ${map["Key2"]["Key2a"]}
+Key2.Key2b = ${map["Key2"]["Key2b"]}
+
+# Complex map and nested for loops
+%{ for key,submap in map ~}
+Root key = ${key}
+%{ for subkey,subvalue in submap ~}
+    ${subkey} = ${subvalue}
+%{ endfor ~}
+%{ endfor ~}
