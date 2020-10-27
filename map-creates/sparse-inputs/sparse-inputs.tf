@@ -7,6 +7,7 @@ locals {
             subnet => {
                 cidr = var.subnet_cidr_map[subnet]                                              # Required value
                 services = lookup(var.subnet_service_endpoint_map, subnet, local.empty_array)   # Optional value
+                offset = subnet == local.subnets[0] ? 0 : 1
             }
     }
 

@@ -5,6 +5,5 @@ Example puts together a complex map from sparse inputs
 
 ```
 terraform init
-terraform plan -var-file environments/sparse.tfvars
-terraform apply -var-file environments/sparse.tfvars
+terraform apply -var-file environments/sparse.tfvars -auto-approve
 ```
