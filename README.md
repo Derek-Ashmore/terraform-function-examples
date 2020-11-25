@@ -6,4 +6,3 @@ A collection of terraform function examples
 | Map Creation | [Sparse Inputs](map-creates/sparse-inputs) | Example puts together a complex map from sparse inputs |
 | Templates | [For Loops](templates/for-loops) | Example puts together a complex template with lists and maps |
 | General | [Collection Operations](general/collection-ops) | Example provides collection operation examples |
-| | [Data Source Exceptions](general/data-source-exceptions) | Example illustrates how to mitigate "not found" errors on data sources |
