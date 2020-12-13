@@ -25,11 +25,27 @@ variable "vpn_site_list" {
     }))
 
     validation {
-        condition   = alltrue([for k,v in var.vpn_site_list : length(regexall("^([0-9]{1,3}[.]){3}[0-9]{1,3}[/][0-9]{1,2}$" , v["onprem_address_space"])) > 0])
+        condition   = alltrue(
+            [
+                for k,v in var.vpn_site_list : 
+                    length(
+                        regexall("^([0-9]{1,3}[.]){3}[0-9]{1,3}[/][0-9]{1,2}$" , v["onprem_address_space"])
+                    ) > 0
+            ]
+        )
         error_message = "Variable onprem_address_space must have a CIDR value."
     }
     validation {
-        condition   = alltrue(flatten([for k1,v1 in var.vpn_site_list : [for k2,v2 in v1["links"] : length(regexall("^([0-9]{1,3}[.]){3}[0-9]{1,3}$" , v2["onprem_gateway_address"])) > 0]]))
+        condition   = alltrue(
+            flatten(
+                [
+                    for k1,v1 in var.vpn_site_list : [
+                        for k2,v2 in v1["links"] : 
+                            length(regexall("^([0-9]{1,3}[.]){3}[0-9]{1,3}$" , v2["onprem_gateway_address"])) > 0
+                    ]
+                ]
+            )
+        )
         error_message = "Variable onprem_gateway_address must have an IP address value."
     }
 
