@@ -11,7 +11,7 @@ variable "vpn_site_list" {
         links                   = map(object({
             preshared_key_secret    = string
             onprem_gateway_address  = string
-            ipsec_policy            = optional(map(object({
+            ipsec_policy            = optional(object({
                 saLifeTimeSeconds   = number
                 saDataSizeKilobytes = number
                 ipsecEncryption         = string
@@ -20,7 +20,7 @@ variable "vpn_site_list" {
                 ikeIntegrity            = string
                 dhGroup                 = string
                 pfsGroup                = string
-            })))
+            }))
         }))
     }))
 
