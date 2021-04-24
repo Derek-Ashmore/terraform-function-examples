@@ -1,9 +1,5 @@
-module "module_base" {
-  source = "git::https://github.com/Derek-Ashmore/terraform-function-examples.git?ref=0.0.1"
-}
-
 module "test" {
-  source = "./.terraform/modules/module_base/general/collection-ops"
+  source = "git::https://github.com/Derek-Ashmore/terraform-function-examples.git//general/collection-ops?ref=0.0.1"
 }
 
 output "last_node" {
