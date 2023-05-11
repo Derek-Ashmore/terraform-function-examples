@@ -1,5 +1,5 @@
 # terraform-function-examples
-Example provides collection operation examples
+Example puts together a complex template with lists and maps
 
 ## Local run commands
 
