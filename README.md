@@ -11,4 +11,5 @@ A collection of terraform function examples
 |  | [Loops within loops](general/loops-within-loops) | Example provides an example of looping through multiple levels and pulling out needed information |
 |  | [Module Reference Git](general/module-git-source) | Example provides an example module import referencing a tag |
 |  | [Module Resource Output](general/module-resource-output) | Example provides an example module exporting an entire resource |
+|  | [Nested Dynamic Block](general/nested-dynamic) | Example provides an example of for_each nesting a dynamic block |
 |  | [Variable validation](general/module-resource-output) | Example provides an examples of variable validation in 0.14.x. |
