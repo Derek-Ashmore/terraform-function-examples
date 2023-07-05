@@ -26,7 +26,6 @@ resource "azurerm_subnet" "subnet" {
 
   dynamic "delegation" {
     for_each = each.value.delegations
-#    for_each = try(var.subnet_map[each.key]["delegations"], {})
     content {
       name = delegation.key
       service_delegation {

@@ -19,20 +19,7 @@ variable subnet_map  {
         }))
 }
 
-variable create_network_watcher {
-  type    = bool
-  default = true
-}
-
 variable vnet_cidr {}
-variable log_analytics_workspace_id {
-  default = null
-}
-
-variable log_retention_policy_days {
-   default = 365
-}
-
 variable dns_servers {
   type = list
   default = ["168.63.129.16"]
