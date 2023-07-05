@@ -1,5 +1,5 @@
 # terraform-function-examples
-Example puts together a complex map from sparse inputs
+Example illustrates use of a for_each with a nested dynamic block
 
 ## Local run commands
 
