@@ -38,8 +38,8 @@ resource "azurerm_subnet" "subnet" {
   enforce_private_link_endpoint_network_policies = each.value.enforce_private_link_endpoint_network_policies
 
   dynamic "delegation" {
-    #for_each = each.value["delegations"]
-    for_each = try(var.subnet_map[each.key]["delegations"], {})
+    for_each = each.value.delegations
+#    for_each = try(var.subnet_map[each.key]["delegations"], {})
     content {
       name = delegation.key
       service_delegation {

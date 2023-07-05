@@ -15,7 +15,7 @@ variable subnet_map  {
             delegations = optional(map(object({
               delegation_name = string
               delegation_actions = list(string)
-            })))
+            })), {})
         }))
 }
 
