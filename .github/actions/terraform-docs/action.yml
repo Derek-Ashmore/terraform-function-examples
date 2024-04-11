@@ -1,0 +1,39 @@
+author: D. Ashmore
+name: Terraform Docs Update
+description: Checks that documentation has been updated on PR
+inputs:
+  push:
+    description: 'Pushes generated documentation changes'
+    default: false
+runs:
+  using: composite
+  steps:
+    - name: setup go
+      uses: actions/setup-go@v4
+      with:
+        go-version: "1.21.x"
+        # cache-dependency-path: tests/go.sum
+
+    - name: install tools
+      shell: bash
+      run: |
+        go install github.com/terraform-docs/terraform-docs@v0.17.0
+
+    - name: Terraform documentation generation
+      shell: bash
+      run: |
+        echo "==> Generating Terraform documentation..."
+        find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform-docs $d; done
+
+    - name: check for changes
+      if: ${{false == input.push}}
+      shell: bash
+      run: |
+        echo "==> Testing for changes to tracked files"
+        CHANGES=$(git status -suno)
+        if [ "$CHANGES" ]; then
+          echo "Repository Terraform documentation is not correct."
+          echo
+          git diff
+          exit 1
+        fi

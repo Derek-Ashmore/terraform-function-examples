@@ -1,0 +1,17 @@
+---
+name: Code checks
+
+on:
+    pull_request:
+        types: ['opened', 'reopened', 'synchronize']
+    workflow_dispatch:
+
+jobs:
+    docs:
+        name: docs
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: check docs
+              uses: .github/actions/terraform-docs
