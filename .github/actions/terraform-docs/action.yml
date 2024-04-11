@@ -27,7 +27,7 @@ runs:
         find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform-docs markdown table --output-file README.md $d; done
 
     - name: check for changes
-#      if: ${{false == input.push}}
+      if: ${{false == inputs.push}}
       shell: bash
       run: |
         echo "==> Testing for changes to tracked files"
