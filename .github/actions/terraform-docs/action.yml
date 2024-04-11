@@ -23,6 +23,7 @@ runs:
       shell: bash
       run: |
         echo "==> Generating Terraform documentation..."
+        set -x
         find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform-docs $d; done
 
     - name: check for changes
