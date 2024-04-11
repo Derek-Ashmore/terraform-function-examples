@@ -14,4 +14,4 @@ jobs:
             - uses: actions/checkout@v4
 
             - name: check docs
-              uses: .github/actions/terraform-docs
+              uses: ./.github/actions/terraform-docs
