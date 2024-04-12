@@ -5,6 +5,9 @@ inputs:
   push:
     description: 'Pushes generated documentation changes'
     default: false
+  config:
+    description: Terraform Docs config file
+    default: .terraform-docs.yml
 runs:
   using: composite
   steps:
@@ -21,10 +24,17 @@ runs:
 
     - name: Terraform documentation generation
       shell: bash
+      env:
+        CONFIG-INPUT: ${{ inputs.config }}
       run: |
         echo "==> Generating Terraform documentation..."
         set -x
-        find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform-docs markdown table --output-file README.md $d; done
+        if [ -f $CONFIG-INPUT ]; then
+          export DOCS-CONFIG=$(realpath $CONFIG-INPUT)
+        else
+          export DOCS-CONFIG=$(echo $CONFIG-INPUT)
+        fi
+        find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform-docs -c $DOCS-CONFIG $d; done
 
     - name: check for changes
       if: ${{false == inputs.push}}
