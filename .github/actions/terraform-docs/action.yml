@@ -42,6 +42,7 @@ runs:
         PUSH: ${{ inputs.push }}
       run: |
         echo "==> Testing for changes to tracked files"
+        git add .
         git status
         CHANGES=$(git status -suno)
         echo $CHANGES
