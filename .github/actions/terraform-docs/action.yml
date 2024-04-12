@@ -46,9 +46,11 @@ runs:
         git status
         CHANGES=$(git status -suno)
         echo $CHANGES
-        if [ "$CHANGES" ]; then
+
+        elif [ "$CHANGES" ]; then
           echo "Repository Terraform documentation is not correct."
           echo
           git diff
+          echo PUSH=$PUSH
           exit 1
         fi

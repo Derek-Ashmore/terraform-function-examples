@@ -15,3 +15,5 @@ jobs:
 
             - name: check docs
               uses: ./.github/actions/terraform-docs
+              with:
+                push: true
