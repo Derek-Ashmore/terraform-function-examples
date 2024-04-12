@@ -37,8 +37,9 @@ runs:
         find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform-docs -c $DOCSCONFIG $d; done
 
     - name: check for changes
-      if: ${{false == inputs.push}}
       shell: bash
+      env:
+        PUSH: ${{ inputs.push }}
       run: |
         echo "==> Testing for changes to tracked files"
         CHANGES=$(git status -suno)
