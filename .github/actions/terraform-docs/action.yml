@@ -36,13 +36,15 @@ runs:
         fi
         find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform-docs -c $DOCSCONFIG $d; done
 
-    - name: check for changes
+    - name: Documentation git push or reporing
       shell: bash
       env:
         PUSH: ${{ inputs.push }}
       run: |
         echo "==> Testing for changes to tracked files"
+        git status
         CHANGES=$(git status -suno)
+        echo $CHANGES
         if [ "$CHANGES" ]; then
           echo "Repository Terraform documentation is not correct."
           echo
