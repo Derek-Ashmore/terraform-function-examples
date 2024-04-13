@@ -26,7 +26,7 @@ jobs:
               if: ${{ github.event_name != 'pull_request'}}
 
             - name: check docs
-              uses: AsperitasConsulting/GitHub-Actions/.github/actions/terraform-docs@main
+              uses: AsperitasConsulting/GitHub-Actions/.github/actions/terraform-docs@v0.0.1
               with:
                 push: ${{ github.event_name == 'pull_request' || inputs.push }}
 
@@ -43,6 +43,6 @@ jobs:
               if: ${{ github.event_name != 'pull_request'}}
 
             - name: check formatting
-              uses: ./.github/actions/terraform-format
+              uses: AsperitasConsulting/GitHub-Actions/.github/actions/terraform-format@v0.0.1
               with:
                 push: ${{ github.event_name == 'pull_request' || inputs.push }}
