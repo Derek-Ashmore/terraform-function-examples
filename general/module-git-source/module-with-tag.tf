@@ -3,5 +3,5 @@ module "test" {
 }
 
 output "last_node" {
-    value = module.test.last_node
+  value = module.test.last_node
 }
