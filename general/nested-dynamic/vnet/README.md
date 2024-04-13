@@ -10,9 +10,9 @@
 | <a name="input_location"></a> [location](#input\_location) | n/a | `any` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | n/a | yes |
 | <a name="input_vnet_name"></a> [vnet\_name](#input\_vnet\_name) | n/a | `any` | n/a | yes |
-| <a name="input_subnet_map"></a> [subnet\_map](#input\_subnet\_map) | n/a | <pre>map(object({<br>            service_endpoints   = optional(list(string))<br>            address_prefixes    = list(string)<br>            enforce_private_link_endpoint_network_policies = optional(bool, null)<br>            network_security_group_id = optional(string)<br>            delegations = optional(map(object({<br>              delegation_name = string<br>              delegation_actions = list(string)<br>            })), {})<br>        }))</pre> | n/a | yes |
+| <a name="input_subnet_map"></a> [subnet\_map](#input\_subnet\_map) | n/a | <pre>map(object({<br>    service_endpoints                              = optional(list(string))<br>    address_prefixes                               = list(string)<br>    enforce_private_link_endpoint_network_policies = optional(bool, null)<br>    network_security_group_id                      = optional(string)<br>    delegations = optional(map(object({<br>      delegation_name    = string<br>      delegation_actions = list(string)<br>    })), {})<br>  }))</pre> | n/a | yes |
 | <a name="input_vnet_cidr"></a> [vnet\_cidr](#input\_vnet\_cidr) | n/a | `any` | n/a | yes |
-| <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | n/a | `list` | <pre>[<br>  "168.63.129.16"<br>]</pre> | no |
+| <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | n/a | `list(any)` | <pre>[<br>  "168.63.129.16"<br>]</pre> | no |
 ## Outputs
 
 No outputs.  
