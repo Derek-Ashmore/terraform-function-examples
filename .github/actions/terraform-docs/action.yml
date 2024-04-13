@@ -49,6 +49,7 @@ runs:
         GITEMAIL: ${{ inputs.gitEmail }}
       run: |
         echo "==> Testing for changes to tracked files"
+        echo PUSH=$PUSH
         git add .
         git status
         CHANGES=$(git status -suno)
@@ -58,7 +59,6 @@ runs:
           echo "Repository Terraform documentation is not correct."
           echo
           git diff
-          echo PUSH=$PUSH
           if [ "$PUSH" != "true" ]; then
             exit 1
           fi
