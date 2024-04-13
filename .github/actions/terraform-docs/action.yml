@@ -8,6 +8,12 @@ inputs:
   config:
     description: Terraform Docs config file
     default: .terraform-docs.yml
+  gitUserName:
+    description: User name to use for git commit and push
+    default: github-actions[bot]
+  gitEmail:
+    description: User email to use for git commit and push
+    default: github-actions[bot]@users.noreply.github.com
 runs:
   using: composite
   steps:
@@ -28,7 +34,6 @@ runs:
         CONFIG: ${{ inputs.config }}
       run: |
         echo "==> Generating Terraform documentation..."
-        set -x
         if [ -f $CONFIG ]; then
           export DOCSCONFIG=$(realpath $CONFIG)
         else
@@ -40,6 +45,8 @@ runs:
       shell: bash
       env:
         PUSH: ${{ inputs.push }}
+        GITNAME: ${{ inputs.gitUserName }}
+        GITEMAIL: ${{ inputs.gitEmail }}
       run: |
         echo "==> Testing for changes to tracked files"
         git add .
@@ -56,8 +63,8 @@ runs:
             exit 1
           fi
 
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
+          git config user.email "$GITEMAIL"
+          git config user.name "$GITNAME"
           git commit -m "Automatic Terraform documentation update"
           git push
         fi
