@@ -18,8 +18,14 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+              if: ${{ github.event_name == 'pull_request'}}
+              with:
+                ref: ${{ github.event.pull_request.head.ref }}
+
+            - uses: actions/checkout@v4
+              if: ${{ github.event_name != 'pull_request'}}
 
             - name: check docs
               uses: ./.github/actions/terraform-docs
               with:
-                push: ${{ inputs.push }}
+                push: ${{ github.event_name == 'pull_request' || inputs.push }}
