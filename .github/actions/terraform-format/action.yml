@@ -1,0 +1,59 @@
+author: D. Ashmore
+name: Terraform Format
+description: Checks that documentation has been formatted according to Terraform standards
+inputs:
+  push:
+    description: 'Pushes formatting changes'
+    default: false
+  version:
+    description: 'Terraform version'
+    default: 1.8.0
+  gitUserName:
+    description: User name to use for git commit and push
+    default: github-actions[bot]
+  gitEmail:
+    description: User email to use for git commit and push
+    default: github-actions[bot]@users.noreply.github.com
+runs:
+  using: composite
+  steps:
+    - name: setup terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: ${{ inputs.version }}
+
+    - name: Terraform formatting
+      shell: bash
+      env:
+        CONFIG: ${{ inputs.config }}
+      run: |
+        echo "==> Generating Terraform documentation..."
+        find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform fmt $d; done
+
+    - name: Formatting git push or reporting
+      shell: bash
+      env:
+        PUSH: ${{ inputs.push }}
+        GITNAME: ${{ inputs.gitUserName }}
+        GITEMAIL: ${{ inputs.gitEmail }}
+      run: |
+        echo "==> Testing for changes to tracked files"
+        echo PUSH=$PUSH
+        git add .
+        git status
+        CHANGES=$(git status -suno)
+        echo $CHANGES
+
+        if [ "$CHANGES" ]; then
+          echo "Repository Terraform formatting is not correct."
+          echo
+          git diff
+          if [ "$PUSH" != "true" ]; then
+            exit 1
+          fi
+
+          git config user.email "$GITEMAIL"
+          git config user.name "$GITNAME"
+          git commit -m "Automatic Terraform formatting update"
+          git push
+        fi
