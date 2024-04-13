@@ -1,7 +1,7 @@
 resource "azurerm_resource_group" "resource_group" {
-    name        = var.resource_group_name
-    location    = var.location
-    tags        = var.tags
+  name     = var.resource_group_name
+  location = var.location
+  tags     = var.tags
 }
 
 resource "azurerm_virtual_network" "vnet" {
@@ -15,7 +15,7 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  for_each                                       = var.subnet_map
+  for_each = var.subnet_map
 
   name                                           = each.key
   resource_group_name                            = azurerm_virtual_network.vnet.resource_group_name
@@ -29,7 +29,7 @@ resource "azurerm_subnet" "subnet" {
     content {
       name = delegation.key
       service_delegation {
-        name = delegation.value.delegation_name
+        name    = delegation.value.delegation_name
         actions = delegation.value.delegation_actions
       }
     }
