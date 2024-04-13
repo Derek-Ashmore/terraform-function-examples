@@ -1,6 +1,6 @@
 <!-- BEGIN_TF_DOCS -->
 # terraform-function-examples
-Example puts together a complex template with lists and maps
+Example puts together a complex template with lists, maps, and nested for loop expressions.
 
 ## Local run commands
 
