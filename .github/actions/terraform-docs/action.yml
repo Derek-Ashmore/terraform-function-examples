@@ -5,6 +5,15 @@ inputs:
   push:
     description: 'Pushes generated documentation changes'
     default: false
+  config:
+    description: Terraform Docs config file
+    default: .terraform-docs.yml
+  gitUserName:
+    description: User name to use for git commit and push
+    default: github-actions[bot]
+  gitEmail:
+    description: User email to use for git commit and push
+    default: github-actions[bot]@users.noreply.github.com
 runs:
   using: composite
   steps:
@@ -12,7 +21,6 @@ runs:
       uses: actions/setup-go@v4
       with:
         go-version: "1.21.x"
-        # cache-dependency-path: tests/go.sum
 
     - name: install tools
       shell: bash
@@ -21,19 +29,41 @@ runs:
 
     - name: Terraform documentation generation
       shell: bash
+      env:
+        CONFIG: ${{ inputs.config }}
       run: |
         echo "==> Generating Terraform documentation..."
-        find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform-docs $d; done
+        if [ -f $CONFIG ]; then
+          export DOCSCONFIG=$(realpath $CONFIG)
+        else
+          export DOCSCONFIG=$(echo $CONFIG)
+        fi
+        find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform-docs -c $DOCSCONFIG $d; done
 
-    - name: check for changes
-      if: ${{false == input.push}}
+    - name: Documentation git push or reporing
       shell: bash
+      env:
+        PUSH: ${{ inputs.push }}
+        GITNAME: ${{ inputs.gitUserName }}
+        GITEMAIL: ${{ inputs.gitEmail }}
       run: |
         echo "==> Testing for changes to tracked files"
+        echo PUSH=$PUSH
+        git add .
+        git status
         CHANGES=$(git status -suno)
+        echo $CHANGES
+
         if [ "$CHANGES" ]; then
           echo "Repository Terraform documentation is not correct."
           echo
           git diff
-          exit 1
+          if [ "$PUSH" != "true" ]; then
+            exit 1
+          fi
+
+          git config user.email "$GITEMAIL"
+          git config user.name "$GITNAME"
+          git commit -m "Automatic Terraform documentation update"
+          git push
         fi

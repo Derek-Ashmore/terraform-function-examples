@@ -5,6 +5,12 @@ on:
     pull_request:
         types: ['opened', 'reopened', 'synchronize']
     workflow_dispatch:
+        inputs:
+            push:
+              description: Push documentation changes
+              required: true
+              type: boolean
+              default: true
 
 jobs:
     docs:
@@ -15,3 +21,5 @@ jobs:
 
             - name: check docs
               uses: ./.github/actions/terraform-docs
+              with:
+                push: ${{ inputs.push }}
