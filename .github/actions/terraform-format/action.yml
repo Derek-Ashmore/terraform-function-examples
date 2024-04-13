@@ -28,7 +28,7 @@ runs:
         CONFIG: ${{ inputs.config }}
       run: |
         echo "==> Generating Terraform documentation..."
-        find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform fmt $d; done
+        find . -name '*.tf' | while read f; do dirname $f; done | sort -u | while read d; do terraform fmt -diff $d; done
 
     - name: Formatting git push or reporting
       shell: bash
