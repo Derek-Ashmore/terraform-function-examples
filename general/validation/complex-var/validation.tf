@@ -1,6 +1,5 @@
 terraform {
-  required_version = "= 0.14.2"
-  experiments      = [module_variable_optional_attrs]
+  required_version = ">=1.4"
 }
 
 variable "vpn_site_list" {

@@ -7,7 +7,7 @@ on:
     workflow_dispatch:
         inputs:
             push:
-              description: Push documentation changes
+              description: Push changes
               required: true
               type: boolean
               default: true
@@ -46,3 +46,12 @@ jobs:
               uses: AsperitasConsulting/GitHub-Actions/.github/actions/terraform-format@v0.0.1
               with:
                 push: ${{ github.event_name == 'pull_request' || inputs.push }}
+
+    validate:
+        name: validate
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: check syntax
+              uses: AsperitasConsulting/GitHub-Actions/.github/actions/terraform-validate@v0.0.2
