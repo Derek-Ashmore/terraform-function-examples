@@ -53,5 +53,5 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: check formatting
+            - name: check syntax
               uses: AsperitasConsulting/GitHub-Actions/.github/actions/terraform-format@validate
