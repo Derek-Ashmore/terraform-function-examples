@@ -7,7 +7,7 @@ on:
     workflow_dispatch:
         inputs:
             push:
-              description: Push documentation changes
+              description: Push changes
               required: true
               type: boolean
               default: true
